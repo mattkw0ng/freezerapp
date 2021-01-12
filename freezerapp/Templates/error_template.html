@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+
+<head>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Jquery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <style>
+    .center-div
+    {
+      margin-top: auto;
+      margin: auto;
+      padding: 30px;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      border-radius: 5px;
+      box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+      height: auto;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(-45deg, #CCCFC7, #C2D5C0, #A8BCA8,#9DA9A4);
+      background-size: 400% 400%;
+      animation: gradient 5s ease infinite;
+    }
+
+    .messages {
+      margin-bottom: 15px;
+      line-height: 5px;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    
+  </style>
+</head>
+
+<body>
+    
+  <div class="center-div bg-light">
+    <div class="container-fluid" id="uploadForm">
+      <h1 style="text-align:center"><span style="color: #ED6A5A">Error </span>
+        <span style="color: #0D2A35">{{ subject }}</span></h1>
+        <hr>
+
+      <div class="messages" id="general">
+        {% for message in messages %}
+          <div class="form-group">
+            <p>
+              <em>
+                ~ {{message}}
+              </em>
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+      <button onclick="redirect()" class="btn btn-secondary mx-auto">Continue</button>
+    </div>
+  </div>
+</body>

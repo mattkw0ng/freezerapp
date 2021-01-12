@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% block content %}
+<script src="https://unpkg.com/muuri@0.8.0/dist/muuri.min.js"></script>
+<script src="https://unpkg.com/web-animations-js@2.3.2/web-animations.min.js"></script>
+<!-- Notes 
+** Create separate editing page (only accesible to admins)
+** The normal page only links to the plate/box displays
+** 
+-->
+
+<div class="title-bar">
+	<h2 class="title">Freezer map</h2>
+	<button class="btn btn-secondary" title="Edit Freezer" onclick="verify('{{freezer_name}}')"><i class="far fa-edit fa-lg"></i></button>
+</div>
+
+<!-- Cabinet 1 -->
+{% for cabinet in f_map %}
+{% set outer_loop = loop %}
+<div id="container" class="cabinet mx-auto">
+    <!-- Header -->
+    <div class="header cabinet-head">Cabinet {{outer_loop.index}}</div>
+    <div class="cabinet-body">
+        <div class="grid grid-{{outer_loop.index}}" id="grid-{{outer_loop.index}}">    
+        {% for compartment in cabinet %}
+            <div class="item code-{{ compartment['vacancy'] }}" >
+                  <div class = "item-content">
+                      {% if compartment['type'] == 'empty' %}
+                          <!-- empty -->
+                          <div class="placeholder sub-item" id = "{{compartment['type']}}">
+                              <p contentEditable="false" class="editcontent">Empty</p>
+                          </div>
+                      {% elif compartment['type'] == 'plate' %}
+                          <!-- plate rack -->
+                          {% set url = '/plate-display/' ~ freezer_name ~ '/' ~  compartment['list'][0] ~ '-' ~ compartment['list'][1] %}
+                        {% for rack in compartment['list'] %}
+                        <div class="freezercell sub-item" onclick = "location.href='{{ url }}'" 
+                            id = "{{compartment['type']}}.{{rack}}">{{rack}}</div>
+                        {% endfor %}
+                    {% elif compartment['type'] == 'tube' %}
+                          <!-- plate rack -->
+                          {% set url = '/plate-display/' ~ freezer_name ~ '/' ~  compartment['list'][0] ~ '-' ~ compartment['list'][1] %}
+                        {% for rack in compartment['list'] %}
+                        <div class="freezercell sub-item" onclick = "location.href='{{ url }}'" 
+                            id = "{{compartment['type']}}.{{rack}}">{{rack}}</div>
+                        {% endfor %}
+                    {% else %}
+                        <!-- box rack -->
+                        {% set url = '/box-display/' ~ freezer_name ~ '/' ~  compartment['list'][0] ~ '-' ~ compartment['list'][3] %}
+                        {% for rack in compartment['list'] %}
+                        <div class="splitcell sub-item" onclick="location.href='{{ url }}'"
+                            id = "{{compartment['type']}}.{{rack}}">{{rack}}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+
+
+<script src="{{ url_for('static', filename='scripts/freezermap.js') }}"></script>
+{% endblock content %}

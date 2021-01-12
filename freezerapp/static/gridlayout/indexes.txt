@@ -1,0 +1,12 @@
+{
+	0: {key:0, value: EMPTY},
+	1: {key:1, value: T01-T02},
+	2: {key:1, value: T03-T04},
+	3: {key:1, value: K01-K02},
+	4: {key:1, value: B17-B20},
+	5: {key:1, value: P01-P02},
+	6: {key:1, value: P03-P04},
+	7: {key:1, value: P05-P06},
+	8: {key:1, value: P07-P08},
+	9: {key:1, value: P09-P10}
+}

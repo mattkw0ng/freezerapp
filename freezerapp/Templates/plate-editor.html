@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+
+<head>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- Jquery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <style>
+    .center-div
+    {
+      /*margin-top: auto;*/
+      margin: auto;
+      padding: 30px;
+      width: 70%;
+      min-height: 100%;
+      box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);
+      padding-top: 50px;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(-45deg, #CCCFC7, #C2D5C0, #A8BCA8,#9DA9A4);
+      background-size: 400% 400%;
+      animation: gradient 5s ease infinite;
+    }
+
+    @keyframes gradient {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    
+  </style>
+</head>
+
+<body>
+    
+  <div class="center-div bg-light">
+    <div class="container-fluid" id="uploadForm">
+      <form action="/oracle/index" method="post" enctype="multipart/form-data" class="form-horizontal">
+        <h1><span style="color: #7FC048">Project </span>
+          <span style="color: #0D2A35">{{ project_code }}</span></h1>
+
+        {% if has_advanced_settings %} 
+          <h5>
+            <span id="generalTag" style="cursor: pointer;" onclick="viewGeneral()">General</span> / 
+            <span id="advancedTag" class="text-muted" style="cursor: pointer;" onclick="viewAdvanced()">Advanced</span>
+          </h5>
+          <hr>
+        {% endif %}
+
+        <div class="control-group" id="general">
+          {% for field in forms %}
+            <div class="form-group">
+              {% if field.widget.input_type != 'hidden' %} {{ field.label }} {% endif %}
+              {{field}}
+            </div>
+          {% endfor %}
+          {{ forms.hidden_tag() }}
+        </div>
+
+        {% if has_advanced_settings %} 
+          <div class="control-group" id="advanced" style="display: none;">
+            {% for field in optional_forms %}
+              <div class="form-group">
+                {% if field.widget.input_type != 'hidden' %} {{ field.label }} {% endif %}
+                {{field}}
+              </div>
+            {% endfor %}
+            {{ optional_forms.hidden_tag() }}
+          </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-secondary">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    $("input").each(function() {
+      if($(this).attr("type") === "file") {
+        $(this).addClass("form-control-file");
+      } else if ($(this).attr("type") === "checkbox") {
+        $(this).addClass("form-check-input");
+      } else {
+        $(this).addClass("form-control");
+      }
+    });
+
+    $("select").each(function() {
+      $(this).addClass("form-control");
+    });
+
+    $("textarea").each(function() {
+      $(this).addClass("form-control");
+    });
+
+    function viewAdvanced(){
+        document.getElementById('advanced').style.display = 'block';
+        document.getElementById('general').style.display = 'none';
+        document.getElementById('generalTag').className = 'text-muted';
+        document.getElementById('advancedTag').className = '';
+      }
+      function viewGeneral(){
+        document.getElementById('advanced').style.display = 'none';
+        document.getElementById('general').style.display = 'block';
+        document.getElementById('generalTag').className = '';
+        document.getElementById('advancedTag').className = 'text-muted';
+      }
+  </script>
+</body>

@@ -1,0 +1,164 @@
+{% extends "layout.html" %}
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<div>
+    <div class="title-bar">
+        <h2 class="title">{{plate_name_1}} - {{plate_name_2}}</h2>
+        <div class="btn-group">
+        {% for letter in letters %}
+            <button class="btn btn-outline-primary" title="Edit Freezer" 
+                onclick="location.href='#{{plate_name_1}}{{letter}}'">
+                {{letter}}
+            </button>
+        {% endfor %}
+        </div>
+    </div>
+    <!-- <div class="container navigator">
+        <div id="nav"></div>
+    </div> -->
+
+    <!-- Table 1 -->
+    <div id = "plate-wrapper">
+        <div class="container plate-table" id="table1" >
+            <!-- Header -->
+            <div class="row" name="header">
+                <div class="col header">{{ plate_name_1 }}</div>
+                <a name="{{ plate_name_1 }}{{ letters.0 }}"></a>
+            </div>
+            <!-- Content -->
+            {% for letter in letters %}
+                {% if letter != letters.0 %}
+                    <!-- navigational breaks -->
+                    <div class="row"><div class="col break">- {{ plate_name_1 }} {{ letter }} -</div><a name="{{ plate_name_1 }}{{ letter }}"></a></div>
+                {% endif %}
+                {% for n in range(1,8) %}
+                    {% set location = plate_name_1 ~ letter ~ n%}
+                    <div class="row">
+                        <div class="col- hovercell form-mini-btn" name="location">{{ letter }}{{ n }}</div>
+                        
+                        <div class="col cell dropdown dropright p-0" style="max-width: 86%;">
+                            <!-- Displays sample name -->
+                            <btn class="dropdown-toggle btn btn-outline-primary form-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ p1_dict[location] }}</btn>
+
+                            <div class="dropdown-menu p-0 border-0" aria-labelledby="dropdownMenuButton">
+                                <div id="forms" class="form-field">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0" style="color: #007BFF">Add or Remove</h5>
+                                        </div>
+                                        <!-- Dropdown form -->
+                                        <div class="card-body p-0">
+                                            <form id = "add_form_template" method = "POST" action = '' class="px-4 py-3">
+                                                {{add_replace.hidden_tag()}}
+                                            <div class="form-group">
+                                                {{add_replace.project_name.label()}}
+                                                {{add_replace.project_name(class = "form-control", id = "project_name")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.plate_name.label()}}
+                                                {{add_replace.plate_name(class = "form-control", id = "plate_name")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.cell_type.label()}}
+                                                {{add_replace.cell_type(class = "form-control", id = "position")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.date.label()}}
+                                                {{add_replace.date(class = "form-control", id = "username")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.initials.label()}}
+                                                {{add_replace.initials(class = "form-control", id = "username")}}
+                                            </div>
+                                            <div hidden="true">
+                                                <input type="string" name="loc" value="{{ location }}">
+                                            </div>
+                                            {{add_replace.submit(class = "btn btn-primary")}}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- dict[location][verified] -->
+                        <div class="col- hovercell" name="verified" style="width: 6%">v</div>
+                    </div>
+                {% endfor %}
+                
+            {% endfor %}
+        </div>
+        <!-- Table 2 -->
+        <div class="container plate-table" id="table2" >
+            <div class="row" name="header">
+                <div class="col header">{{ plate_name_2 }}</div>
+                <a name="{{ plate_name_2 }}{{ letters.0 }}"></a>
+            </div>
+            {% for letter in letters %}
+                {% if letter != letters.0 %}
+                    <div class="row"><div class="col break">- {{ plate_name_2 }} {{ letter }} -</div><a name="{{ plate_name_2 }}{{ letter }}"></a></div>
+                {% endif %}
+                {% for n in range(1,8) %}
+                    {% set location = plate_name_2 ~ letter ~ n%}
+                    <div class="row">
+
+                        <div class="col- hovercell form-mini-btn" name="location">{{ letter }}{{ n }}</div>
+
+                        <div class="col cell dropdown dropleft p-0" style="max-width: 86%">
+                            <!-- Displays sample name -->
+                            <btn class="dropdown-toggle btn btn-outline-primary form-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ p2_dict[location] }}</btn>
+
+                            <!-- Dropdown form -->
+                            <div class="dropdown-menu p-0 border-0" aria-labelledby="dropdownMenuButton">
+                                <div id="forms" class="form-field">
+                                    <div class="card">
+                                        <div class="card-header" id="headingOne">
+                                            <h5 class="mb-0" style="color: #007BFF">Add or Remove</h5>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <form id = "add_form_template" method = "POST" action = '' class="px-4 py-3">
+                                                {{add_replace.hidden_tag()}}
+                                            <div class="form-group">
+                                                {{add_replace.project_name.label()}}
+                                                {{add_replace.project_name(class = "form-control", id = "project_name")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.plate_name.label()}}
+                                                {{add_replace.plate_name(class = "form-control", id = "plate_name")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.cell_type.label()}}
+                                                {{add_replace.cell_type(class = "form-control", id = "position")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.date.label()}}
+                                                {{add_replace.date(class = "form-control", id = "username")}}
+                                            </div>
+                                            <div class="form-group">
+                                                {{add_replace.initials.label()}}
+                                                {{add_replace.initials(class = "form-control", id = "username")}}
+                                            </div>
+                                            <div hidden="true">
+                                                <input type="string" name="loc" value="{{ location }}">
+                                            </div>
+                                            {{add_replace.submit(class = "btn btn-primary")}}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col- hovercell" name="verified" style="width: 6%">v</div>
+                    </div>
+                {% endfor %}
+                
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div id = "inputHere"></div>
+<script src = "{{ url_for('static', filename='scripts/plate_display.js') }}"></script>
+<script type="text/javascript">
+    fillnav('nav', '{{ plate_name_1 }}');
+</script>
+
+{% endblock content %}

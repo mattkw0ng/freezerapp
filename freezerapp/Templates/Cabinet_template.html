@@ -1,0 +1,158 @@
+<div id="container-2" class="cabinet mx-auto">
+    <!-- Header -->
+    <div class="header cabinet-head">Cabinet 1</div> 
+    
+
+    <!-- Grid -->
+    <div class="cabinet-body">
+        <div class="grid grid-2" id="grid-2">
+          <div class="item code-1" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+
+          <!-- Multiple plates -->
+          <div class="item code-2" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+          <div class="item code-3" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+          <div class="item code-4" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+          <div class="item code-5" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+          <div class="item code-6" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+          <div class="item code-7" >
+            <div class = "item-content">
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+                <div class="freezercell" onclick = "location.href='/plate-display'">P##</div>
+            </div>      
+          </div>
+
+          <div class="item code-8" >
+            <div class = "item-content">
+                <div class="placeholder">
+                    <p contentEditable="false" class="editcontent">
+                        Empty</p></div>
+            </div>      
+          </div>
+          
+          <div class="item code-9" >
+            <div class="item-content">
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+            </div>
+          </div>
+
+          <div class="item code-10" >
+            <div class="item-content">
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+                <div class="splitcell" onclick="location.href='/box-display'">
+                    B##</div>
+            </div>
+          </div>
+          
+        </div>
+    </div>
+</div>
+
+<div class="col cell dropdown dropright" style="padding:0px; max-width: 86%">
+    <!-- Displays sample name -->
+    <btn class="dropdown-toggle btn btn-outline-primary form-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ p1_dict[location] }}</btn>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" style="padding: 0px;">
+        <div id="forms" class="form-field">
+            <div class="card border-0">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0" style="color: #007BFF">Add or Remove</h5>
+                </div>
+                <!-- Dropdown form -->
+                <div class="card-body" style="padding: 0px;">
+                    <form id = "add_form_template" method = "POST" action = '' class="px-4 py-3">
+                        {{add_replace.hidden_tag()}}
+                    <div class="form-group">
+                        {{add_replace.project_name.label()}}
+                        {{add_replace.project_name(class = "form-control", id = "project_name")}}
+                    </div>
+                    <div class="form-group">
+                        {{add_replace.plate_name.label()}}
+                        {{add_replace.plate_name(class = "form-control", id = "plate_name")}}
+                    </div>
+                    <div class="form-group">
+                        {{add_replace.cell_type.label()}}
+                        {{add_replace.cell_type(class = "form-control", id = "position")}}
+                    </div>
+                    <div class="form-group">
+                        {{add_replace.date.label()}}
+                        {{add_replace.date(class = "form-control", id = "username")}}
+                    </div>
+                    <div class="form-group">
+                        {{add_replace.initials.label()}}
+                        {{add_replace.initials(class = "form-control", id = "username")}}
+                    </div>
+                    <div hidden="true">
+                        <input type="string" name="loc" value="{{ location }}">
+                    </div>
+                    {{add_replace.submit(class = "btn btn-primary")}}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+  function loadLayout(grid, serializedLayout) {
+    var layout = JSON.parse(serializedLayout);
+    var currentItems = grid.getItems();
+    var currentItemIds = currentItems.map(function (item) {
+      return item.getElement().getAttribute('data-id')
+    });
+    var newItems = [];
+    var itemId;
+    var itemIndex;
+
+    for (var i = 0; i < layout.length; i++) {
+      itemId = layout[i];
+      itemIndex = currentItemIds.indexOf(itemId);
+      if (itemIndex > -1) {
+        newItems.push(currentItems[itemIndex])
+      }
+    }
+
+    grid.sort(newItems, {layout: 'instant'});
+  }
+</script>

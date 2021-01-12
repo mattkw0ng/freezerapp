@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<meta charset='utf-8'>
+<html>
+  <head>
+    <!-- Fontawesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- Bootstrap js -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <!-- Slick css -->
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <!-- css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+  </head>
+  <body class="bg-light">
+
+    <div class="navbar navbar-dark bg-dark navbar-expand-md" style="box-shadow: 0 1px 6px 0 rgba(32, 33, 36, .28);">
+      <div>
+        <img src="{{ url_for('static', filename='logos/dbio-true-white.png') }}" 
+          onclick = "location.href='/home'" style = "height:55px; cursor: pointer;" class='logo'>
+      </div>
+      <div class="d-flex justify-content-end ml-auto">
+        
+        <div class="dropdown nav-item" style="padding-right: 10px;">
+          <button class="dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" 
+            aria-haspopup="true" aria-expanded="false" style="background-color: inherit; color: white;">
+            Add Form
+          </button>
+          <div class="dropdown-menu pull-right m-0 p-0" id = "drop_form" aria-labelledby="dropdownMenuButton" style="width: 250px">
+            <!-- insert forms here -->
+          </div>
+        </div>
+
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-primary my-2 my-sm-0" type="submit" style="background-color: #7FC048; border-color: #7FC048;">Search</button>
+        </form>
+      </div>
+      
+    </div>
+
+
+    <!-- Form template 
+    project_name = StringField("project name", validators = [DataRequired()])
+    plate_name = StringField("plate name",  validators = [DataRequired(),Regexp('.*')])
+    cell_type = SelectField("cell type", choices = [('glycerin','glyc'),('PPE',"PPE")])
+    date = DateField("date",format = '%d/%m/%Y')
+    initials = StringField("initials" , validators = [DataRequired()])
+    submit = SubmitField("Submit")
+    -->
+    <div hidden="true">
+      <div id="forms" class="form-field">
+          <div class="card">
+              <div class="card-header" id="headingOne">
+                  <h5 class="mb-0" style="color: #007BFF">Add or Remove</h5>
+              </div>
+              <!-- Dropdown form -->
+              <div class="card-body p-0">
+                  <form id = "add_form_template" method = "POST" action = '' class="px-4 py-3">
+                      {{add_replace.hidden_tag()}}
+                  <div class="form-group">
+                      {{add_replace.project_name.label()}}
+                      {{add_replace.project_name(class = "form-control", id = "project_name")}}
+                  </div>
+                  <div class="form-group">
+                      {{add_replace.plate_name.label()}}
+                      {{add_replace.plate_name(class = "form-control", id = "plate_name")}}
+                  </div>
+                  <div class="form-group">
+                      {{add_replace.cell_type.label()}}
+                      {{add_replace.cell_type(class = "form-control", id = "position")}}
+                  </div>
+                  <div class="form-group">
+                      {{add_replace.date.label()}}
+                      {{add_replace.date(class = "form-control", id = "username")}}
+                  </div>
+                  <div class="form-group">
+                      {{add_replace.initials.label()}}
+                      {{add_replace.initials(class = "form-control", id = "username")}}
+                  </div>
+                  <div class="form-group">
+                      <label for="loc">location</label>
+                      <input class="form-control" type="string" name="loc" value="{{ location }}">
+                  </div>
+                  {{add_replace.submit(class = "btn btn-primary")}}
+                  </form>
+              </div>
+          </div>
+      </div>
+ 
+    </div>
+    <!-- End form template -->
+
+    <!-- Script -->
+    <script type="text/javascript">
+      var drop_form = document.getElementById('drop_form');
+      var template = document.getElementById('forms');
+      var form_1 = template.cloneNode(true);
+      drop_form.appendChild(form_1);
+    </script>
+    <!-- End script -->
+
+
+    {% block content %}{% endblock %}
+  </body>

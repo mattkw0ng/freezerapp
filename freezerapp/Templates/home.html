@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="title-bar">
+  <h2 class="title">Home - freezer select</h2>
+  <button class="btn btn-secondary" title="Add Freezer" onclick="add_freezer()"><i class="fas fa-plus"></i></button>
+</div>
+
+<div class="single-freezer-view">
+  {% for freezer in freezer_list %}
+  <div class="freezer">
+    <div class="freezer-main">
+      <h3>{{ freezer[0] }}</h3>
+      <hr>
+      <p>
+        {% for type in freezer[1] %}
+        {{type}} racks: {{freezer[1][type]}}
+        <br>
+        {% endfor %}
+      </p>
+      <div class="btn btn-primary" onclick="location.href = '/freezer-map/{{freezer[0]}}'">View freezer</div>
+    </div>
+
+    <div class="freezer-secondary text-secondary">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">[00:00:00] - Matt moved x to y</li>
+        <li class="list-group-item">[00:00:15] - Matt added x to P01</li>
+        <li class="list-group-item">Morbi leo risus</li>
+        <li class="list-group-item">Porta ac consectetur ac</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Morbi leo risus</li>
+        <li class="list-group-item">Porta ac consectetur ac</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+  
+
+<div class="freezer-carousel">
+  <div class="btn-container">
+    <button class="btn btn-primary rounded-circle" id='prev-arrow'><i class="fas fa-caret-left"></i></button>
+  </div>
+  
+  <div class="slides" style="">
+    {% for freezer in freezer_list %}
+    <div class="freezer-nav"> {{freezer[0]}} </div>
+    {% endfor %}
+  </div>
+  <div class="btn-container">
+    <button class="btn btn-primary rounded-circle" id='next-arrow'><i class="fas fa-caret-right"></i></button>
+  </div>
+	
+</div>
+
+<!-- <div class="btn-group carousel-btns" role="group">
+  
+  
+</div> -->
+  
+
+<!-- Slick library -->
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="{{ url_for('static', filename='scripts/home.js') }}"></script>
+{% endblock content %}
